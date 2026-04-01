@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olivia's Coffee Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fdf6ee;
+      --surface: #f5ede0;
+      --card: #fffdf9;
+      --brown: #5c3d2e;
+      --mocha: #8b5e3c;
+      --cream: #d4b896;
+      --muted: #9e8272;
+      --border: rgba(92,61,46,0.12);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--brown);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--brown);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+    .nav-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--brown);
+      text-align: center;
+      padding: 60px 20px;
+      border-bottom: 4px solid var(--cream);
+    }
+
+    .hero-icon { font-size: 3rem; margin-bottom: 16px; }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--bg);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--cream);
+    }
+
+    .hero p {
+      color: var(--cream);
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--mocha);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* MAIN */
+    .main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* LOG FORM */
+    .log-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px;
+      margin-bottom: 32px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--brown);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group select:focus,
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--mocha);
+    }
+
+    .form-group textarea {
+      resize: none;
+      height: 70px;
+    }
+
+    .photo-upload {
+      border: 2px dashed var(--cream);
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 16px;
+      background: var(--bg);
+    }
+
+    .photo-upload:hover { border-color: var(--mocha); background: var(--surface); }
+
+    .photo-upload input { display: none; }
+
+    .photo-upload p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 300;
+    }
+
+    .photo-upload .upload-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+    .photo-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: none;
+      margin-bottom: 16px;
+    }
+
+    .log-photo {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 4px;
+      min-width: 70px;
+    }
+
+    .log-time {
+      font-size: 0.75rem;
+      color: var(--cream);
+      background: var(--mocha);
+      padding: 2px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--brown);
+      color: var(--bg);
+      border: none;
+      padding: 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { background: var(--mocha); }
+
+    /* COFFEE LOG */
+    .log-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .log-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .log-emoji { font-size: 1.8rem; min-width: 40px; text-align: center; }
+
+    .log-info { flex: 1; }
+
+    .log-type {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .log-details {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .log-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .log-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--mocha);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .log-delete {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .log-delete:hover { color: #c0392b; }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--muted);
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .stats-bar { gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Olivia's Coffee</a>
+    <span class="nav-tag">☕ $2.00 per cup</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-icon">☕</div>
+    <h1>Olivia's <em>Coffee Shop</em></h1>
+    <p>Every cup logged. Every dollar earned.</p>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <p class="stat-num" id="total-cups">0</p>
+      <p class="stat-label">Cups Made</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num" id="total-earned">$0</p>
+      <p class="stat-label">Total Earned</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num" id="hot-count">0</p>
+      <p class="stat-label">Hot Coffees</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num" id="iced-count">0</p>
+      <p class="stat-label">Iced Coffees</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="log-card">
+      <h2 class="card-title">☕ Log a Coffee</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Type</label>
+          <select id="coffee-type">
+            <option value="Hot Coffee">Hot Coffee</option>
+            <option value="Iced Coffee">Iced Coffee</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="coffee-date">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Notes (optional)</label>
+        <textarea id="coffee-notes" placeholder="e.g. extra sugar, oat milk..."></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Photo Proof</label>
+        <input type="file" id="coffee-photo" accept="image/*" onchange="previewPhoto(this)" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:4px;font-size:0.85rem;font-family:'DM Sans',sans-serif;color:var(--muted);background:var(--bg);width:100%;cursor:pointer;">
+      </div>
+      <img id="photo-preview" class="photo-preview">
+      <button class="submit-btn" onclick="logCoffee()">+ Log This Coffee</button>
+    </div>
+
+    <div class="log-card">
+      <h2 class="card-title">📋 Coffee Log</h2>
+      <div class="log-list" id="log-list">
+        <p class="empty-state">No coffees logged yet...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2026 Olivia's Coffee Shop &mdash; Dad's favorite barista
+  </footer>
+
+  <script>
+    const PRICE = 2;
+    let coffees = JSON.parse(localStorage.getItem('olivia-coffees') || '[]');
+
+    // Set today's date as default
+    document.getElementById('coffee-date').value = new Date().toISOString().split('T')[0];
+
+    let currentPhotoData = null;
+
+    function previewPhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentPhotoData = e.target.result;
+        const preview = document.getElementById('photo-preview');
+        preview.src = currentPhotoData;
+        preview.style.display = 'block';
+        document.getElementById('upload-text').textContent = '✓ Photo added!';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function logCoffee() {
+      const type = document.getElementById('coffee-type').value;
+      const date = document.getElementById('coffee-date').value;
+      const notes = document.getElementById('coffee-notes').value.trim();
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+      if (!date) { alert('Please select a date!'); return; }
+
+      coffees.unshift({ type, date, notes, price: PRICE, id: Date.now(), photo: currentPhotoData, time });
+      localStorage.setItem('olivia-coffees', JSON.stringify(coffees));
+      document.getElementById('coffee-notes').value = '';
+      document.getElementById('photo-preview').style.display = 'none';
+      document.getElementById('upload-text').textContent = 'Tap to take a photo of the coffee';
+      document.getElementById('coffee-photo').value = '';
+      currentPhotoData = null;
+      render();
+    }
+
+    function deleteCoffee(id) {
+      coffees = coffees.filter(c => c.id !== id);
+      localStorage.setItem('olivia-coffees', JSON.stringify(coffees));
+      render();
+    }
+
+    function render() {
+      const list = document.getElementById('log-list');
+      const total = coffees.length;
+      const earned = total * PRICE;
+      const hot = coffees.filter(c => c.type === 'Hot Coffee').length;
+      const iced = coffees.filter(c => c.type === 'Iced Coffee').length;
+
+      document.getElementById('total-cups').textContent = total;
+      document.getElementById('total-earned').textContent = '$' + earned;
+      document.getElementById('hot-count').textContent = hot;
+      document.getElementById('iced-count').textContent = iced;
+
+      if (coffees.length === 0) {
+        list.innerHTML = '<p class="empty-state">No coffees logged yet...</p>';
+        return;
+      }
+
+      list.innerHTML = coffees.map(c => `
+        <div class="log-item">
+          ${c.photo ? `<img src="${c.photo}" class="log-photo">` : `<div class="log-emoji">${c.type === 'Hot Coffee' ? '☕' : '🧊'}</div>`}
+          <div class="log-info">
+            <p class="log-type">${c.type}</p>
+            <p class="log-details">${new Date(c.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+            ${c.time ? `<span class="log-time">🕐 ${c.time}</span>` : ''}
+            ${c.notes ? `<p class="log-note">"${c.notes}"</p>` : ''}
+          </div>
+          <p class="log-price">$${c.price}</p>
+          <button class="log-delete" onclick="deleteCoffee(${c.id})" title="Remove">✕</button>
+        </div>
+      `).join('');
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
