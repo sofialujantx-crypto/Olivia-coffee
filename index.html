@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olivia's Coffee Shop ☕</title>
+  <title>Olivia's Coffee Shop â</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -218,7 +218,6 @@
       box-shadow: none;
     }
 
-    /* Confirmation screen */
     .confirm-screen {
       display: none;
       text-align: center;
@@ -285,7 +284,6 @@
       background: #fff3e8;
     }
 
-    /* Olivia's view link */
     .view-link {
       text-align: center;
       margin-top: 20px;
@@ -301,7 +299,6 @@
       text-decoration: underline;
     }
 
-    /* Olivia orders panel */
     .orders-panel {
       display: none;
       margin-top: 24px;
@@ -363,7 +360,7 @@
     <!-- ORDER FORM -->
     <div id="orderForm">
       <div class="header">
-        <h1>☕ Olivia's<br>Coffee Shop</h1>
+        <h1>â Olivia's<br>Coffee Shop</h1>
         <p>What can I make you, Dad?</p>
       </div>
 
@@ -371,10 +368,10 @@
         <div class="section-label">Hot or Iced?</div>
         <div class="options">
           <button class="option-btn" onclick="selectTemp(this, 'Hot')" id="tempHot">
-            <span class="emoji">🔥</span> Hot
+            <span class="emoji">ð¥</span> Hot
           </button>
           <button class="option-btn" onclick="selectTemp(this, 'Iced')" id="tempIced">
-            <span class="emoji">🧊</span> Iced
+            <span class="emoji">ð§</span> Iced
           </button>
         </div>
       </div>
@@ -383,22 +380,22 @@
         <div class="section-label">What drink?</div>
         <div class="drinks-grid">
           <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">
-            <span class="emoji">☕</span> Coffee
+            <span class="emoji">â</span> Coffee
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Latte')">
-            <span class="emoji">🥛</span> Latte
+            <span class="emoji">ð¥</span> Latte
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Cappuccino')">
-            <span class="emoji">💨</span> Cappuccino
+            <span class="emoji">ð¨</span> Cappuccino
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Espresso')">
-            <span class="emoji">⚡</span> Espresso
+            <span class="emoji">â¡</span> Espresso
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">
-            <span class="emoji">🍫</span> Mocha
+            <span class="emoji">ð«</pan> Mocha
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Tea')">
-            <span class="emoji">🍵</span> Tea
+            <span class="emoji">ðµ</span> Tea
           </button>
         </div>
       </div>
@@ -418,25 +415,23 @@
       </div>
 
       <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
-        Place My Order ☕
+        Place My Order â
       </button>
     </div>
 
-    <!-- CONFIRMATION SCREEN -->
     <div id="confirmScreen" class="confirm-screen">
-      <div class="big-emoji">🎉</div>
+      <div class="big-emoji">ð</div>
       <h2>Order Placed!</h2>
       <div class="order-summary" id="orderSummary"></div>
       <p class="sub">Olivia will get it ready for you!</p>
       <button class="new-order-btn" onclick="resetOrder()">Order Another</button>
     </div>
 
-    <!-- Olivia's secret view -->
     <div class="view-link">
-      <button onclick="toggleOrders()">Olivia — see orders</button>
+      <button onclick="toggleOrders()">Olivia â see orders</button>
     </div>
     <div class="orders-panel" id="ordersPanel">
-      <h3>📋 Orders</h3>
+      <h3>ð Orders</h3>
       <div id="ordersList"></div>
       <button class="clear-btn" onclick="clearOrders()">Clear all orders</button>
     </div>
@@ -483,20 +478,15 @@
         notes: notes,
         time: new Date().toLocaleString()
       };
-
-      // Save to localStorage
       const orders = JSON.parse(localStorage.getItem('coffeeOrders') || '[]');
       orders.unshift(order);
       localStorage.setItem('coffeeOrders', JSON.stringify(orders));
-
-      // Show confirmation
       const summary = document.getElementById('orderSummary');
       summary.innerHTML = `
         <p>Drink: <span>${order.temp} ${order.size} ${order.drink}</span></p>
         ${order.notes ? `<p>Notes: <span>${order.notes}</span></p>` : ''}
         <p>Time: <span>${order.time}</span></p>
       `;
-
       document.getElementById('orderForm').style.display = 'none';
       document.getElementById('confirmScreen').style.display = 'block';
     }
@@ -532,7 +522,7 @@
       list.innerHTML = orders.map(o => `
         <div class="order-item">
           <div class="order-title">${o.temp} ${o.size} ${o.drink}</div>
-          <div class="order-meta">${o.notes ? '📝 ' + o.notes + ' · ' : ''}🕐 ${o.time}</div>
+          <div class="order-meta">${o.notes ? 'ð ' + o.notes + ' Â· ' : ''}à ${o.time}</div>
         </div>
       `).join('');
     }
