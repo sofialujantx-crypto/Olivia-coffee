@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olivia's Coffee Shop â</title>
+  <title>Olivia's Coffee Shop ☕</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -358,6 +358,36 @@
       margin-top: 8px;
       font-weight: 700;
     }
+
+    .earnings-box {
+      background: linear-gradient(135deg, #c8783a, #9b4f1e);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      color: white;
+      text-align: center;
+    }
+
+    .earnings-box .earnings-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+
+    .earnings-box .earnings-amount {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      margin-top: 4px;
+    }
+
+    .order-price {
+      color: #c8783a;
+      font-weight: 800;
+      font-size: 0.85rem;
+      float: right;
+    }
   </style>
 </head>
 <body>
@@ -366,7 +396,7 @@
     <!-- ORDER FORM -->
     <div id="orderForm">
       <div class="header">
-        <h1>â Olivia's<br>Coffee Shop</h1>
+        <h1>&#x2615; Olivia's<br>Coffee Shop</h1>
         <p>What can I make you, Dad?</p>
       </div>
 
@@ -374,10 +404,10 @@
         <div class="section-label">Hot or Iced?</div>
         <div class="options">
           <button class="option-btn" onclick="selectTemp(this, 'Hot')" id="tempHot">
-            <span class="emoji">ð¥</span> Hot
+            <span class="emoji">&#x1F525;</span> Hot
           </button>
           <button class="option-btn" onclick="selectTemp(this, 'Iced')" id="tempIced">
-            <span class="emoji">ð§</span> Iced
+            <span class="emoji">&#x1F9CA;</span> Iced
           </button>
         </div>
       </div>
@@ -386,22 +416,22 @@
         <div class="section-label">What drink?</div>
         <div class="drinks-grid">
           <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">
-            <span class="emoji">â</span> Coffee
+            <span class="emoji">&#x2615;</span> Coffee
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Latte')">
-            <span class="emoji">ð¥</span> Latte
+            <span class="emoji">&#x1F95B;</span> Latte
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Cappuccino')">
-            <span class="emoji">ð¨</span> Cappuccino
+            <span class="emoji">&#x1F4A8;</span> Cappuccino
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Espresso')">
-            <span class="emoji">â¡</span> Espresso
+            <span class="emoji">&#x26A1;</span> Espresso
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">
-            <span class="emoji">ð«</span> Mocha
+            <span class="emoji">&#x1F36B;</span> Mocha
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Tea')">
-            <span class="emoji">ðµ</span Tea
+            <span class="emoji">&#x1F375;</span> Tea
           </button>
         </div>
       </div>
@@ -421,13 +451,13 @@
       </div>
 
       <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
-        Place My Order â
+        Place My Order &#x2615;
       </button>
     </div>
 
     <!-- CONFIRMATION SCREEN -->
     <div id="confirmScreen" class="confirm-screen">
-      <div class="big-emoji">ð</div>
+      <div class="big-emoji">&#x1F389;</div>
       <h2>Order Placed!</h2>
       <div class="order-summary" id="orderSummary"></div>
       <p class="sub">Olivia will get it ready for you!</p>
@@ -436,10 +466,14 @@
 
     <!-- Olivia's secret view -->
     <div class="view-link">
-      <button onclick="toggleOrders()">Olivia â see orders</button>
+      <button onclick="toggleOrders()">Olivia — see orders</button>
     </div>
     <div class="orders-panel" id="ordersPanel">
-      <h3>ð Orders</h3>
+      <h3>&#x1F4CB; Orders</h3>
+      <div class="earnings-box" id="earningsBox" style="display:none">
+        <div class="earnings-label">&#x1F4B0; Total Earned</div>
+        <div class="earnings-amount" id="earningsAmount">$0</div>
+      </div>
       <div id="ordersList"></div>
       <button class="clear-btn" onclick="clearOrders()">Clear all orders</button>
     </div>
@@ -492,6 +526,7 @@
         drink: selectedDrink,
         size: selectedSize,
         notes: notes,
+        price: 3,
         time: new Date().toLocaleString()
       };
 
@@ -503,6 +538,7 @@
       summary.innerHTML = `
         <p>Drink: <span>${order.temp} ${order.size} ${order.drink}</span></p>
         ${order.notes ? `<p>Notes: <span>${order.notes}</span></p>` : ''}
+        <p>Price: <span>$${order.price}.00</span></p>
         <p>Time: <span>${order.time}</span></p>
       `;
 
@@ -521,11 +557,24 @@
       document.getElementById('confirmScreen').style.display = 'none';
     }
 
+    const SECRET = 'olivia';
+    let unlocked = false;
+
     function toggleOrders() {
       const panel = document.getElementById('ordersPanel');
       if (panel.style.display === 'block') {
         panel.style.display = 'none';
+        unlocked = false;
       } else {
+        if (!unlocked) {
+          const guess = prompt('What is the password?');
+          if (guess === null) return;
+          if (guess.toLowerCase().trim() !== SECRET) {
+            alert('Wrong password!');
+            return;
+          }
+          unlocked = true;
+        }
         loadOrders();
         panel.style.display = 'block';
       }
@@ -541,10 +590,13 @@
           return;
         }
         const orders = Object.values(data).reverse();
+        const total = orders.reduce((sum, o) => sum + (o.price || 3), 0);
+        document.getElementById('earningsBox').style.display = 'block';
+        document.getElementById('earningsAmount').textContent = '$' + total;
         list.innerHTML = orders.map(o => `
           <div class="order-item">
-            <div class="order-title">${o.temp} ${o.size} ${o.drink}</div>
-            <div class="order-meta">${o.notes ? 'ð ' + o.notes + ' Â· ' : ''~ð ${o.time}</div>
+            <div class="order-title">${o.temp} ${o.size} ${o.drink} <span class="order-price">$${o.price || 3}</span></div>
+            <div class="order-meta">${o.notes ? '&#x1F4DD; ' + o.notes + ' &middot; ' : ''}&#x1F550; ${o.time}</div>
           </div>
         `).join('');
       });
@@ -553,6 +605,7 @@
     function clearOrders() {
       ordersRef.remove();
       document.getElementById('ordersList').innerHTML = '<p class="no-orders">No orders yet!</p>';
+      document.getElementById('earningsBox').style.display = 'none';
     }
   </script>
 </body>
