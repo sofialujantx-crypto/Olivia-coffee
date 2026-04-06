@@ -1,493 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Olivia's Coffee Shop</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olivia's Coffee Shop ☕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #fdf6ee;
-      --surface: #f5ede0;
-      --card: #fffdf9;
-      --brown: #5c3d2e;
-      --mocha: #8b5e3c;
-      --cream: #d4b896;
-      --muted: #9e8272;
-      --border: rgba(92,61,46,0.12);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--brown);
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #fdf6ec 0%, #fce4c8 100%);
       min-height: 100vh;
-    }
-
-    /* NAV */
-    nav {
-      background: var(--brown);
-      padding: 20px 40px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-    }
-
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-style: italic;
-      color: var(--bg);
-      text-decoration: none;
-    }
-
-    .nav-tag {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cream);
-    }
-
-    /* HERO */
-    .hero {
-      background: var(--brown);
-      text-align: center;
-      padding: 60px 20px;
-      border-bottom: 4px solid var(--cream);
-    }
-
-    .hero-icon { font-size: 3rem; margin-bottom: 16px; }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      color: var(--bg);
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--cream);
-    }
-
-    .hero p {
-      color: var(--cream);
-      font-size: 0.95rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-    }
-
-    /* STATS BAR */
-    .stats-bar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 24px 40px;
-      display: flex;
       justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
+      padding: 20px;
     }
 
-    .stat {
+    .card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(180, 100, 40, 0.15);
+      padding: 40px 36px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .header {
       text-align: center;
-    }
-
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 600;
-      color: var(--mocha);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    /* MAIN */
-    .main {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    /* LOG FORM */
-    .log-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px;
       margin-bottom: 32px;
     }
 
-    .card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+    .header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.2rem;
+      color: #7b3f00;
+      line-height: 1.2;
+    }
+
+    .header p {
+      color: #a0714f;
+      font-size: 1rem;
+      margin-top: 6px;
       font-weight: 600;
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #7b3f00;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .section {
       margin-bottom: 24px;
+    }
+
+    .options {
       display: flex;
-      align-items: center;
+      gap: 12px;
+    }
+
+    .option-btn {
+      flex: 1;
+      padding: 16px 10px;
+      border: 2.5px solid #e8d5c0;
+      border-radius: 16px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #7b3f00;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .option-btn .emoji {
+      display: block;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+    }
+
+    .option-btn:hover {
+      border-color: #c8783a;
+      background: #fff8f2;
+    }
+
+    .option-btn.selected {
+      border-color: #c8783a;
+      background: #fff3e8;
+      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
+    }
+
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-group label {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .form-group select,
-    .form-group input,
-    .form-group textarea {
-      padding: 10px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
+    .drink-btn {
+      padding: 14px 10px;
+      border: 2.5px solid #e8d5c0;
+      border-radius: 14px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
       font-size: 0.9rem;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--brown);
-      background: var(--bg);
+      font-weight: 700;
+      color: #7b3f00;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .drink-btn .emoji {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .drink-btn:hover {
+      border-color: #c8783a;
+      background: #fff8f2;
+    }
+
+    .drink-btn.selected {
+      border-color: #c8783a;
+      background: #fff3e8;
+      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
+    }
+
+    .size-options {
+      display: flex;
+      gap: 10px;
+    }
+
+    .size-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: 2.5px solid #e8d5c0;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #7b3f00;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .size-btn:hover {
+      border-color: #c8783a;
+      background: #fff8f2;
+    }
+
+    .size-btn.selected {
+      border-color: #c8783a;
+      background: #fff3e8;
+      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 2.5px solid #e8d5c0;
+      border-radius: 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      color: #5c3d1e;
+      resize: none;
       outline: none;
       transition: border-color 0.2s;
+      background: white;
     }
 
-    .form-group select:focus,
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--mocha);
+    textarea:focus {
+      border-color: #c8783a;
     }
 
-    .form-group textarea {
-      resize: none;
-      height: 70px;
+    textarea::placeholder {
+      color: #c4a882;
     }
 
-    .photo-upload {
-      border: 2px dashed var(--cream);
-      border-radius: 4px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      margin-bottom: 16px;
-      background: var(--bg);
-    }
-
-    .photo-upload:hover { border-color: var(--mocha); background: var(--surface); }
-
-    .photo-upload input { display: none; }
-
-    .photo-upload p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 300;
-    }
-
-    .photo-upload .upload-icon { font-size: 1.8rem; margin-bottom: 8px; }
-
-    .photo-preview {
+    .order-btn {
       width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 4px;
-      display: none;
-      margin-bottom: 16px;
-    }
-
-    .log-photo {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 4px;
-      min-width: 70px;
-    }
-
-    .log-time {
-      font-size: 0.75rem;
-      color: var(--cream);
-      background: var(--mocha);
-      padding: 2px 8px;
-      border-radius: 2px;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      background: var(--brown);
-      color: var(--bg);
+      padding: 18px;
+      background: linear-gradient(135deg, #c8783a, #9b4f1e);
+      color: white;
       border: none;
-      padding: 14px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      border-radius: 18px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
       cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      transition: background 0.2s;
+      transition: all 0.2s;
       margin-top: 8px;
+      letter-spacing: 0.02em;
     }
 
-    .submit-btn:hover { background: var(--mocha); }
-
-    /* COFFEE LOG */
-    .log-list { display: flex; flex-direction: column; gap: 12px; }
-
-    .log-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+    .order-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(155, 79, 30, 0.4);
     }
 
-    .log-emoji { font-size: 1.8rem; min-width: 40px; text-align: center; }
-
-    .log-info { flex: 1; }
-
-    .log-type {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 2px;
+    .order-btn:active {
+      transform: translateY(0);
     }
 
-    .log-details {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 300;
+    .order-btn:disabled {
+      background: #d4b896;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
-    .log-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 4px;
-      font-style: italic;
+    /* Confirmation screen */
+    .confirm-screen {
+      display: none;
+      text-align: center;
     }
 
-    .log-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--mocha);
-      min-width: 60px;
-      text-align: right;
+    .confirm-screen .big-emoji {
+      font-size: 5rem;
+      margin-bottom: 16px;
+      animation: bounce 0.6s ease;
     }
 
-    .log-delete {
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .confirm-screen h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.9rem;
+      color: #7b3f00;
+      margin-bottom: 10px;
+    }
+
+    .confirm-screen .order-summary {
+      background: #fff3e8;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .confirm-screen .order-summary p {
+      color: #7b3f00;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .confirm-screen .order-summary p span {
+      font-weight: 400;
+      color: #a0714f;
+    }
+
+    .confirm-screen .sub {
+      color: #a0714f;
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .new-order-btn {
+      background: none;
+      border: 2.5px solid #c8783a;
+      color: #c8783a;
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .new-order-btn:hover {
+      background: #fff3e8;
+    }
+
+    /* Olivia's view link */
+    .view-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .view-link button {
       background: none;
       border: none;
-      color: #ccc;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .log-delete:hover { color: #c0392b; }
-
-    .empty-state {
-      text-align: center;
-      padding: 48px;
-      color: var(--muted);
-      font-style: italic;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 40px;
-      color: var(--muted);
+      color: #c4a882;
       font-size: 0.8rem;
-      border-top: 1px solid var(--border);
-      margin-top: 60px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      text-decoration: underline;
     }
 
-    @media (max-width: 600px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .stats-bar { gap: 30px; }
+    /* Olivia orders panel */
+    .orders-panel {
+      display: none;
+      margin-top: 24px;
+      border-top: 2px solid #f0e0ce;
+      padding-top: 20px;
+    }
+
+    .orders-panel h3 {
+      font-family: 'Pacifico', cursive;
+      color: #7b3f00;
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+    }
+
+    .order-item {
+      background: #fff8f2;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border: 1.5px solid #e8d5c0;
+    }
+
+    .order-item .order-title {
+      font-weight: 800;
+      color: #7b3f00;
+      font-size: 0.95rem;
+    }
+
+    .order-item .order-meta {
+      color: #a0714f;
+      font-size: 0.82rem;
+      margin-top: 3px;
+    }
+
+    .no-orders {
+      color: #c4a882;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .clear-btn {
+      background: none;
+      border: 1.5px solid #e8d5c0;
+      color: #c4a882;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
+  <div class="card">
 
-  <nav>
-    <a href="#" class="nav-logo">Olivia's Coffee</a>
-    <span class="nav-tag">☕ $2.00 per cup</span>
-  </nav>
+    <!-- ORDER FORM -->
+    <div id="orderForm">
+      <div class="header">
+        <h1>☕ Olivia's<br>Coffee Shop</h1>
+        <p>What can I make you, Dad?</p>
+      </div>
 
-  <div class="hero">
-    <div class="hero-icon">☕</div>
-    <h1>Olivia's <em>Coffee Shop</em></h1>
-    <p>Every cup logged. Every dollar earned.</p>
-  </div>
-
-  <div class="stats-bar">
-    <div class="stat">
-      <p class="stat-num" id="total-cups">0</p>
-      <p class="stat-label">Cups Made</p>
-    </div>
-    <div class="stat">
-      <p class="stat-num" id="total-earned">$0</p>
-      <p class="stat-label">Total Earned</p>
-    </div>
-    <div class="stat">
-      <p class="stat-num" id="hot-count">0</p>
-      <p class="stat-label">Hot Coffees</p>
-    </div>
-    <div class="stat">
-      <p class="stat-num" id="iced-count">0</p>
-      <p class="stat-label">Iced Coffees</p>
-    </div>
-  </div>
-
-  <div class="main">
-
-    <div class="log-card">
-      <h2 class="card-title">☕ Log a Coffee</h2>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Type</label>
-          <select id="coffee-type">
-            <option value="Hot Coffee">Hot Coffee</option>
-            <option value="Iced Coffee">Iced Coffee</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Date</label>
-          <input type="date" id="coffee-date">
+      <div class="section">
+        <div class="section-label">Hot or Iced?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectTemp(this, 'Hot')" id="tempHot">
+            <span class="emoji">🔥</span> Hot
+          </button>
+          <button class="option-btn" onclick="selectTemp(this, 'Iced')" id="tempIced">
+            <span class="emoji">🧊</span> Iced
+          </button>
         </div>
       </div>
-      <div class="form-group" style="margin-bottom:16px;">
-        <label>Notes (optional)</label>
-        <textarea id="coffee-notes" placeholder="e.g. extra sugar, oat milk..."></textarea>
+
+      <div class="section">
+        <div class="section-label">What drink?</div>
+        <div class="drinks-grid">
+          <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">
+            <span class="emoji">☕</span> Coffee
+          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Latte')">
+            <span class="emoji">🥛</span> Latte
+          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Cappuccino')">
+            <span class="emoji">💨</span> Cappuccino
+          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Espresso')">
+            <span class="emoji">⚡</span> Espresso
+          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">
+            <span class="emoji">🍫</span> Mocha
+          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Tea')">
+            <span class="emoji">🍵</span> Tea
+          </button>
+        </div>
       </div>
-      <div class="form-group" style="margin-bottom:16px;">
-        <label>Photo Proof</label>
-        <input type="file" id="coffee-photo" accept="image/*" onchange="previewPhoto(this)" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:4px;font-size:0.85rem;font-family:'DM Sans',sans-serif;color:var(--muted);background:var(--bg);width:100%;cursor:pointer;">
+
+      <div class="section">
+        <div class="section-label">Size</div>
+        <div class="size-options">
+          <button class="size-btn" onclick="selectSize(this, 'Small')">Small</button>
+          <button class="size-btn" onclick="selectSize(this, 'Medium')">Medium</button>
+          <button class="size-btn" onclick="selectSize(this, 'Large')">Large</button>
+        </div>
       </div>
-      <img id="photo-preview" class="photo-preview">
-      <button class="submit-btn" onclick="logCoffee()">+ Log This Coffee</button>
+
+      <div class="section">
+        <div class="section-label">Any notes? (optional)</div>
+        <textarea id="notes" rows="2" placeholder="e.g. extra sugar, oat milk..."></textarea>
+      </div>
+
+      <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
+        Place My Order ☕
+      </button>
     </div>
 
-    <div class="log-card">
-      <h2 class="card-title">📋 Coffee Log</h2>
-      <div class="log-list" id="log-list">
-        <p class="empty-state">No coffees logged yet...</p>
-      </div>
+    <!-- CONFIRMATION SCREEN -->
+    <div id="confirmScreen" class="confirm-screen">
+      <div class="big-emoji">🎉</div>
+      <h2>Order Placed!</h2>
+      <div class="order-summary" id="orderSummary"></div>
+      <p class="sub">Olivia will get it ready for you!</p>
+      <button class="new-order-btn" onclick="resetOrder()">Order Another</button>
+    </div>
+
+    <!-- Olivia's secret view -->
+    <div class="view-link">
+      <button onclick="toggleOrders()">Olivia — see orders</button>
+    </div>
+    <div class="orders-panel" id="ordersPanel">
+      <h3>📋 Orders</h3>
+      <div id="ordersList"></div>
+      <button class="clear-btn" onclick="clearOrders()">Clear all orders</button>
     </div>
 
   </div>
-
-  <footer>
-    &copy; 2026 Olivia's Coffee Shop &mdash; Dad's favorite barista
-  </footer>
 
   <script>
-    const PRICE = 2;
-    let coffees = JSON.parse(localStorage.getItem('olivia-coffees') || '[]');
+    let selectedTemp = '';
+    let selectedDrink = '';
+    let selectedSize = '';
 
-    // Set today's date as default
-    document.getElementById('coffee-date').value = new Date().toISOString().split('T')[0];
+    function selectTemp(btn, value) {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedTemp = value;
+      checkReady();
+    }
 
-    let currentPhotoData = null;
+    function selectDrink(btn, value) {
+      document.querySelectorAll('.drink-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedDrink = value;
+      checkReady();
+    }
 
-    function previewPhoto(input) {
-      const file = input.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        currentPhotoData = e.target.result;
-        const preview = document.getElementById('photo-preview');
-        preview.src = currentPhotoData;
-        preview.style.display = 'block';
-        document.getElementById('upload-text').textContent = '✓ Photo added!';
+    function selectSize(btn, value) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSize = value;
+      checkReady();
+    }
+
+    function checkReady() {
+      const btn = document.getElementById('orderBtn');
+      btn.disabled = !(selectedTemp && selectedDrink && selectedSize);
+    }
+
+    function placeOrder() {
+      const notes = document.getElementById('notes').value.trim();
+      const order = {
+        temp: selectedTemp,
+        drink: selectedDrink,
+        size: selectedSize,
+        notes: notes,
+        time: new Date().toLocaleString()
       };
-      reader.readAsDataURL(file);
+
+      // Save to localStorage
+      const orders = JSON.parse(localStorage.getItem('coffeeOrders') || '[]');
+      orders.unshift(order);
+      localStorage.setItem('coffeeOrders', JSON.stringify(orders));
+
+      // Show confirmation
+      const summary = document.getElementById('orderSummary');
+      summary.innerHTML = `
+        <p>Drink: <span>${order.temp} ${order.size} ${order.drink}</span></p>
+        ${order.notes ? `<p>Notes: <span>${order.notes}</span></p>` : ''}
+        <p>Time: <span>${order.time}</span></p>
+      `;
+
+      document.getElementById('orderForm').style.display = 'none';
+      document.getElementById('confirmScreen').style.display = 'block';
     }
 
-    function logCoffee() {
-      const type = document.getElementById('coffee-type').value;
-      const date = document.getElementById('coffee-date').value;
-      const notes = document.getElementById('coffee-notes').value.trim();
-      const now = new Date();
-      const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-      if (!date) { alert('Please select a date!'); return; }
-
-      coffees.unshift({ type, date, notes, price: PRICE, id: Date.now(), photo: currentPhotoData, time });
-      localStorage.setItem('olivia-coffees', JSON.stringify(coffees));
-      document.getElementById('coffee-notes').value = '';
-      document.getElementById('photo-preview').style.display = 'none';
-      document.getElementById('upload-text').textContent = 'Tap to take a photo of the coffee';
-      document.getElementById('coffee-photo').value = '';
-      currentPhotoData = null;
-      render();
+    function resetOrder() {
+      selectedTemp = '';
+      selectedDrink = '';
+      selectedSize = '';
+      document.querySelectorAll('.option-btn, .drink-btn, .size-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('notes').value = '';
+      document.getElementById('orderBtn').disabled = true;
+      document.getElementById('orderForm').style.display = 'block';
+      document.getElementById('confirmScreen').style.display = 'none';
     }
 
-    function deleteCoffee(id) {
-      coffees = coffees.filter(c => c.id !== id);
-      localStorage.setItem('olivia-coffees', JSON.stringify(coffees));
-      render();
+    function toggleOrders() {
+      const panel = document.getElementById('ordersPanel');
+      if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+      } else {
+        loadOrders();
+        panel.style.display = 'block';
+      }
     }
 
-    function render() {
-      const list = document.getElementById('log-list');
-      const total = coffees.length;
-      const earned = total * PRICE;
-      const hot = coffees.filter(c => c.type === 'Hot Coffee').length;
-      const iced = coffees.filter(c => c.type === 'Iced Coffee').length;
-
-      document.getElementById('total-cups').textContent = total;
-      document.getElementById('total-earned').textContent = '$' + earned;
-      document.getElementById('hot-count').textContent = hot;
-      document.getElementById('iced-count').textContent = iced;
-
-      if (coffees.length === 0) {
-        list.innerHTML = '<p class="empty-state">No coffees logged yet...</p>';
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('coffeeOrders') || '[]');
+      const list = document.getElementById('ordersList');
+      if (orders.length === 0) {
+        list.innerHTML = '<p class="no-orders">No orders yet!</p>';
         return;
       }
-
-      list.innerHTML = coffees.map(c => `
-        <div class="log-item">
-          ${c.photo ? `<img src="${c.photo}" class="log-photo">` : `<div class="log-emoji">${c.type === 'Hot Coffee' ? '☕' : '🧊'}</div>`}
-          <div class="log-info">
-            <p class="log-type">${c.type}</p>
-            <p class="log-details">${new Date(c.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
-            ${c.time ? `<span class="log-time">🕐 ${c.time}</span>` : ''}
-            ${c.notes ? `<p class="log-note">"${c.notes}"</p>` : ''}
-          </div>
-          <p class="log-price">$${c.price}</p>
-          <button class="log-delete" onclick="deleteCoffee(${c.id})" title="Remove">✕</button>
+      list.innerHTML = orders.map(o => `
+        <div class="order-item">
+          <div class="order-title">${o.temp} ${o.size} ${o.drink}</div>
+          <div class="order-meta">${o.notes ? '📝 ' + o.notes + ' · ' : ''}🕐 ${o.time}</div>
         </div>
       `).join('');
     }
 
-    render();
+    function clearOrders() {
+      localStorage.removeItem('coffeeOrders');
+      loadOrders();
+    }
   </script>
-
 </body>
 </html>
