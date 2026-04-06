@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Olivia's Coffee Shop â</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -218,6 +221,7 @@
       box-shadow: none;
     }
 
+    /* Confirmation screen */
     .confirm-screen {
       display: none;
       text-align: center;
@@ -284,6 +288,7 @@
       background: #fff3e8;
     }
 
+    /* Olivia's view link */
     .view-link {
       text-align: center;
       margin-top: 20px;
@@ -299,6 +304,7 @@
       text-decoration: underline;
     }
 
+    /* Olivia orders panel */
     .orders-panel {
       display: none;
       margin-top: 24px;
@@ -371,7 +377,7 @@
             <span class="emoji">ð¥</span> Hot
           </button>
           <button class="option-btn" onclick="selectTemp(this, 'Iced')" id="tempIced">
-            <span class="emoji">ð§</span> Iced
+            <span class="emoji">ð§</span> Iced
           </button>
         </div>
       </div>
@@ -380,7 +386,7 @@
         <div class="section-label">What drink?</div>
         <div class="drinks-grid">
           <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">
-            <span class="emoji">â</span> Coffee
+            <span class="emoji">â</span> Coffee
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Latte')">
             <span class="emoji">ð¥</span> Latte
@@ -392,10 +398,10 @@
             <span class="emoji">â¡</span> Espresso
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">
-            <span class="emoji">ð«</pan> Mocha
+            <span class="emoji">ð«</span> Mocha
           </button>
           <button class="drink-btn" onclick="selectDrink(this, 'Tea')">
-            <span class="emoji">ðµ</span> Tea
+            <span class="emoji">ðµ</span Tea
           </button>
         </div>
       </div>
@@ -419,6 +425,7 @@
       </button>
     </div>
 
+    <!-- CONFIRMATION SCREEN -->
     <div id="confirmScreen" class="confirm-screen">
       <div class="big-emoji">ð</div>
       <h2>Order Placed!</h2>
@@ -427,6 +434,7 @@
       <button class="new-order-btn" onclick="resetOrder()">Order Another</button>
     </div>
 
+    <!-- Olivia's secret view -->
     <div class="view-link">
       <button onclick="toggleOrders()">Olivia â see orders</button>
     </div>
@@ -439,6 +447,14 @@
   </div>
 
   <script>
+    // Firebase setup
+    const firebaseConfig = {
+      databaseURL: "https://olivia-coffee-default-rtdb.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const ordersRef = db.ref('orders');
+
     let selectedTemp = '';
     let selectedDrink = '';
     let selectedSize = '';
@@ -478,15 +494,18 @@
         notes: notes,
         time: new Date().toLocaleString()
       };
-      const orders = JSON.parse(localStorage.getItem('coffeeOrders') || '[]');
-      orders.unshift(order);
-      localStorage.setItem('coffeeOrders', JSON.stringify(orders));
+
+      // Save to Firebase
+      ordersRef.push(order);
+
+      // Show confirmation
       const summary = document.getElementById('orderSummary');
       summary.innerHTML = `
         <p>Drink: <span>${order.temp} ${order.size} ${order.drink}</span></p>
         ${order.notes ? `<p>Notes: <span>${order.notes}</span></p>` : ''}
         <p>Time: <span>${order.time}</span></p>
       `;
+
       document.getElementById('orderForm').style.display = 'none';
       document.getElementById('confirmScreen').style.display = 'block';
     }
@@ -513,23 +532,27 @@
     }
 
     function loadOrders() {
-      const orders = JSON.parse(localStorage.getItem('coffeeOrders') || '[]');
       const list = document.getElementById('ordersList');
-      if (orders.length === 0) {
-        list.innerHTML = '<p class="no-orders">No orders yet!</p>';
-        return;
-      }
-      list.innerHTML = orders.map(o => `
-        <div class="order-item">
-          <div class="order-title">${o.temp} ${o.size} ${o.drink}</div>
-          <div class="order-meta">${o.notes ? 'ð ' + o.notes + ' Â· ' : ''}à ${o.time}</div>
-        </div>
-      `).join('');
+      list.innerHTML = '<p class="no-orders">Loading...</p>';
+      ordersRef.once('value', snapshot => {
+        const data = snapshot.val();
+        if (!data) {
+          list.innerHTML = '<p class="no-orders">No orders yet!</p>';
+          return;
+        }
+        const orders = Object.values(data).reverse();
+        list.innerHTML = orders.map(o => `
+          <div class="order-item">
+            <div class="order-title">${o.temp} ${o.size} ${o.drink}</div>
+            <div class="order-meta">${o.notes ? 'ð ' + o.notes + ' Â· ' : ''~ð ${o.time}</div>
+          </div>
+        `).join('');
+      });
     }
 
     function clearOrders() {
-      localStorage.removeItem('coffeeOrders');
-      loadOrders();
+      ordersRef.remove();
+      document.getElementById('ordersList').innerHTML = '<p class="no-orders">No orders yet!</p>';
     }
   </script>
 </body>
