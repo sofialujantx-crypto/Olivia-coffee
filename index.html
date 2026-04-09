@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olivia's Coffee Shop ☕</title>
+  <title>Olivia's Coffee Shop â</title>
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#c8783a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -14,6 +14,8 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -470,23 +472,25 @@
       <button class="new-order-btn" onclick="resetOrder()">Order Another</button>
     </div>
 
-    <!-- Olivia's secret view -->
+    <!-- Olivia's secret link -->
     <div class="view-link">
-      <button onclick="toggleOrders()">Olivia — see orders</button>
-    </div>
-    <div class="orders-panel" id="ordersPanel">
-      <h3>&#x1F4CB; Orders</h3>
-      <div class="earnings-box" id="earningsBox" style="display:none">
-        <div class="earnings-label">&#x1F4B0; Total Earned</div>
-        <div class="earnings-amount" id="earningsAmount">$0</div>
-      </div>
-      <div id="ordersList"></div>
-      <button class="clear-btn" onclick="clearOrders()">Clear all orders</button>
+      <a href="/olivia.html" style="color:#c4a882;font-size:0.8rem;font-family:'Nunito',sans-serif;text-decoration:underline;">&#x1F451; Olivia's Kitchen</a>
     </div>
 
   </div>
 
   <script>
+    // EmailJS
+    emailjs.init('YOUR_PUBLIC_KEY');
+    function sendOrderEmail(order) {
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        drink: order.temp + ' ' + order.size + ' ' + order.drink,
+        notes: order.notes || 'No notes',
+        price: '$' + order.price + '.00',
+        time: order.time
+      }).catch(e => console.log('Email error:', e));
+    }
+
     // Firebase setup
     const firebaseConfig = {
       databaseURL: "https://olivia-coffee-default-rtdb.firebaseio.com"
@@ -539,6 +543,9 @@
       // Save to Firebase
       ordersRef.push(order);
 
+      // Send email notification
+      sendOrderEmail(order);
+
       // Show confirmation
       const summary = document.getElementById('orderSummary');
       summary.innerHTML = `
@@ -563,56 +570,6 @@
       document.getElementById('confirmScreen').style.display = 'none';
     }
 
-    const SECRET = 'olivia';
-    let unlocked = false;
-
-    function toggleOrders() {
-      const panel = document.getElementById('ordersPanel');
-      if (panel.style.display === 'block') {
-        panel.style.display = 'none';
-        unlocked = false;
-      } else {
-        if (!unlocked) {
-          const guess = prompt('What is the password?');
-          if (guess === null) return;
-          if (guess.toLowerCase().trim() !== SECRET) {
-            alert('Wrong password!');
-            return;
-          }
-          unlocked = true;
-        }
-        loadOrders();
-        panel.style.display = 'block';
-      }
-    }
-
-    function loadOrders() {
-      const list = document.getElementById('ordersList');
-      list.innerHTML = '<p class="no-orders">Loading...</p>';
-      ordersRef.once('value', snapshot => {
-        const data = snapshot.val();
-        if (!data) {
-          list.innerHTML = '<p class="no-orders">No orders yet!</p>';
-          return;
-        }
-        const orders = Object.values(data).reverse();
-        const total = orders.reduce((sum, o) => sum + (o.price || 3), 0);
-        document.getElementById('earningsBox').style.display = 'block';
-        document.getElementById('earningsAmount').textContent = '$' + total;
-        list.innerHTML = orders.map(o => `
-          <div class="order-item">
-            <div class="order-title">${o.temp} ${o.size} ${o.drink} <span class="order-price">$${o.price || 3}</span></div>
-            <div class="order-meta">${o.notes ? '&#x1F4DD; ' + o.notes + ' &middot; ' : ''}&#x1F550; ${o.time}</div>
-          </div>
-        `).join('');
-      });
-    }
-
-    function clearOrders() {
-      ordersRef.remove();
-      document.getElementById('ordersList').innerHTML = '<p class="no-orders">No orders yet!</p>';
-      document.getElementById('earningsBox').style.display = 'none';
-    }
   </script>
   <script>
     if ('serviceWorker' in navigator) {
