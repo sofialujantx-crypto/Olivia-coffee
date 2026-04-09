@@ -3,444 +3,256 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olivia's Coffee Shop â</title>
+  <title>Olivia's Coffee Shop</title>
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#c8783a" />
+  <meta name="theme-color" content="#b5845a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Olivia's Coffee" />
   <link rel="apple-touch-icon" href="/icon.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Firebase -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #fdf6ec 0%, #fce4c8 100%);
+      background: #f5ede3;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px 16px;
     }
 
     .card {
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 8px 40px rgba(180, 100, 40, 0.15);
-      padding: 40px 36px;
-      max-width: 420px;
+      background: #fffaf6;
+      border-radius: 20px;
+      box-shadow: 0 4px 32px rgba(120, 70, 20, 0.10);
+      padding: 44px 40px 36px;
+      max-width: 440px;
       width: 100%;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
-
+    .header .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #b5845a;
+      border-radius: 50%;
+      margin-bottom: 16px;
+    }
     .header h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 2.2rem;
-      color: #7b3f00;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #3b2010;
+      letter-spacing: -0.01em;
       line-height: 1.2;
     }
-
     .header p {
-      color: #a0714f;
-      font-size: 1rem;
-      margin-top: 6px;
-      font-weight: 600;
-    }
-
-    .section-label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: #7b3f00;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-    }
-
-    .section {
-      margin-bottom: 24px;
-    }
-
-    .options {
-      display: flex;
-      gap: 12px;
-    }
-
-    .option-btn {
-      flex: 1;
-      padding: 16px 10px;
-      border: 2.5px solid #e8d5c0;
-      border-radius: 16px;
-      background: white;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #7b3f00;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .option-btn .emoji {
-      display: block;
-      font-size: 1.8rem;
-      margin-bottom: 6px;
-    }
-
-    .option-btn:hover {
-      border-color: #c8783a;
-      background: #fff8f2;
-    }
-
-    .option-btn.selected {
-      border-color: #c8783a;
-      background: #fff3e8;
-      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
-    }
-
-    .drinks-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .drink-btn {
-      padding: 14px 10px;
-      border: 2.5px solid #e8d5c0;
-      border-radius: 14px;
-      background: white;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
+      color: #a07850;
       font-size: 0.9rem;
-      font-weight: 700;
-      color: #7b3f00;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .drink-btn .emoji {
-      display: block;
-      font-size: 1.5rem;
-      margin-bottom: 4px;
-    }
-
-    .drink-btn:hover {
-      border-color: #c8783a;
-      background: #fff8f2;
-    }
-
-    .drink-btn.selected {
-      border-color: #c8783a;
-      background: #fff3e8;
-      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
-    }
-
-    .size-options {
-      display: flex;
-      gap: 10px;
-    }
-
-    .size-btn {
-      flex: 1;
-      padding: 12px 8px;
-      border: 2.5px solid #e8d5c0;
-      border-radius: 12px;
-      background: white;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #7b3f00;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .size-btn:hover {
-      border-color: #c8783a;
-      background: #fff8f2;
-    }
-
-    .size-btn.selected {
-      border-color: #c8783a;
-      background: #fff3e8;
-      box-shadow: 0 0 0 3px rgba(200, 120, 58, 0.15);
-    }
-
-    textarea {
-      width: 100%;
-      padding: 14px;
-      border: 2.5px solid #e8d5c0;
-      border-radius: 14px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      color: #5c3d1e;
-      resize: none;
-      outline: none;
-      transition: border-color 0.2s;
-      background: white;
-    }
-
-    textarea:focus {
-      border-color: #c8783a;
-    }
-
-    textarea::placeholder {
-      color: #c4a882;
-    }
-
-    .order-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #c8783a, #9b4f1e);
-      color: white;
-      border: none;
-      border-radius: 18px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
       margin-top: 8px;
+      font-weight: 500;
       letter-spacing: 0.02em;
     }
 
-    .order-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(155, 79, 30, 0.4);
+    .divider {
+      height: 1px;
+      background: #ecdcc8;
+      margin: 0 0 28px;
     }
 
-    .order-btn:active {
-      transform: translateY(0);
+    .section { margin-bottom: 28px; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #a07850;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
     }
 
-    .order-btn:disabled {
-      background: #d4b896;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Confirmation screen */
-    .confirm-screen {
-      display: none;
+    .options { display: flex; gap: 10px; }
+    .option-btn {
+      flex: 1;
+      padding: 13px 10px;
+      border: 1.5px solid #e0cdb8;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #5c3d20;
+      transition: all 0.18s ease;
       text-align: center;
     }
+    .option-btn:hover { border-color: #b5845a; background: #fdf5ed; }
+    .option-btn.selected { border-color: #b5845a; background: #b5845a; color: white; }
 
-    .confirm-screen .big-emoji {
-      font-size: 5rem;
-      margin-bottom: 16px;
-      animation: bounce 0.6s ease;
+    .drinks-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .drink-btn {
+      padding: 14px 8px;
+      border: 1.5px solid #e0cdb8;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #5c3d20;
+      transition: all 0.18s ease;
+      text-align: center;
     }
+    .drink-btn:hover { border-color: #b5845a; background: #fdf5ed; }
+    .drink-btn.selected { border-color: #b5845a; background: #b5845a; color: white; }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    .size-options { display: flex; gap: 8px; }
+    .size-btn {
+      flex: 1;
+      padding: 12px 6px;
+      border: 1.5px solid #e0cdb8;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #5c3d20;
+      transition: all 0.18s ease;
+      text-align: center;
     }
+    .size-btn:hover { border-color: #b5845a; background: #fdf5ed; }
+    .size-btn.selected { border-color: #b5845a; background: #b5845a; color: white; }
 
+    textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #e0cdb8;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      color: #3b2010;
+      resize: none;
+      outline: none;
+      background: white;
+      transition: border-color 0.18s;
+      line-height: 1.5;
+    }
+    textarea:focus { border-color: #b5845a; }
+    textarea::placeholder { color: #c8aa8e; }
+
+    .order-btn {
+      width: 100%;
+      padding: 16px;
+      background: #b5845a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    .order-btn:hover { background: #9a6c44; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(155, 100, 50, 0.25); }
+    .order-btn:active { transform: translateY(0); }
+    .order-btn:disabled { background: #d9c4ae; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .confirm-screen { display: none; text-align: center; padding: 12px 0; }
+    .confirm-icon { font-size: 2.8rem; margin-bottom: 20px; }
     .confirm-screen h2 {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.9rem;
-      color: #7b3f00;
-      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #3b2010;
+      margin-bottom: 8px;
     }
+    .confirm-screen .sub { color: #a07850; font-size: 0.9rem; margin-bottom: 28px; font-weight: 500; }
 
-    .confirm-screen .order-summary {
-      background: #fff3e8;
+    .order-summary {
+      background: #fdf0e3;
       border-radius: 14px;
-      padding: 16px 20px;
-      margin: 20px 0;
+      padding: 18px 22px;
+      margin: 0 0 28px;
       text-align: left;
     }
-
-    .confirm-screen .order-summary p {
-      color: #7b3f00;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
+    .order-summary .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid #ecdcc8;
+      font-size: 0.88rem;
     }
-
-    .confirm-screen .order-summary p span {
-      font-weight: 400;
-      color: #a0714f;
-    }
-
-    .confirm-screen .sub {
-      color: #a0714f;
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-    }
+    .order-summary .row:last-child { border-bottom: none; }
+    .order-summary .row .label { color: #a07850; font-weight: 600; }
+    .order-summary .row .value { color: #3b2010; font-weight: 700; }
 
     .new-order-btn {
       background: none;
-      border: 2.5px solid #c8783a;
-      color: #c8783a;
-      padding: 14px 32px;
-      border-radius: 14px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .new-order-btn:hover {
-      background: #fff3e8;
-    }
-
-    /* Olivia's view link */
-    .view-link {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .view-link button {
-      background: none;
-      border: none;
-      color: #c4a882;
-      font-size: 0.8rem;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      text-decoration: underline;
-    }
-
-    /* Olivia orders panel */
-    .orders-panel {
-      display: none;
-      margin-top: 24px;
-      border-top: 2px solid #f0e0ce;
-      padding-top: 20px;
-    }
-
-    .orders-panel h3 {
-      font-family: 'Pacifico', cursive;
-      color: #7b3f00;
-      font-size: 1.2rem;
-      margin-bottom: 14px;
-    }
-
-    .order-item {
-      background: #fff8f2;
+      border: 1.5px solid #b5845a;
+      color: #b5845a;
+      padding: 13px 32px;
       border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      border: 1.5px solid #e8d5c0;
-    }
-
-    .order-item .order-title {
-      font-weight: 800;
-      color: #7b3f00;
-      font-size: 0.95rem;
-    }
-
-    .order-item .order-meta {
-      color: #a0714f;
-      font-size: 0.82rem;
-      margin-top: 3px;
-    }
-
-    .no-orders {
-      color: #c4a882;
-      font-size: 0.9rem;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .clear-btn {
-      background: none;
-      border: 1.5px solid #e8d5c0;
-      color: #c4a882;
-      padding: 8px 16px;
-      border-radius: 10px;
       font-family: 'Nunito', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
+      font-weight: 700;
       cursor: pointer;
-      margin-top: 8px;
-      font-weight: 700;
+      transition: all 0.18s;
+      letter-spacing: 0.03em;
     }
+    .new-order-btn:hover { background: #fdf5ed; }
 
-    .earnings-box {
-      background: linear-gradient(135deg, #c8783a, #9b4f1e);
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 14px;
-      color: white;
-      text-align: center;
-    }
-
-    .earnings-box .earnings-label {
-      font-size: 0.8rem;
-      font-weight: 700;
+    .footer-link { text-align: center; margin-top: 28px; }
+    .footer-link a {
+      color: #c8aa8e;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      opacity: 0.85;
+      transition: color 0.15s;
     }
-
-    .earnings-box .earnings-amount {
-      font-family: 'Pacifico', cursive;
-      font-size: 2rem;
-      margin-top: 4px;
-    }
-
-    .order-price {
-      color: #c8783a;
-      font-weight: 800;
-      font-size: 0.85rem;
-      float: right;
-    }
+    .footer-link a:hover { color: #a07850; }
   </style>
 </head>
 <body>
   <div class="card">
-
-    <!-- ORDER FORM -->
     <div id="orderForm">
       <div class="header">
-        <h1>&#x2615; Olivia's<br>Coffee Shop</h1>
-        <p>What can I make you, Dad?</p>
+        <div class="dot"></div>
+        <h1>Olivia's Coffee</h1>
+        <p>What would you like today, Dad?</p>
       </div>
+      <div class="divider"></div>
 
       <div class="section">
-        <div class="section-label">Hot or Iced?</div>
+        <div class="section-label">Temperature</div>
         <div class="options">
-          <button class="option-btn" onclick="selectTemp(this, 'Hot')" id="tempHot">
-            <span class="emoji">&#x1F525;</span> Hot
-          </button>
-          <button class="option-btn" onclick="selectTemp(this, 'Iced')" id="tempIced">
-            <span class="emoji">&#x1F9CA;</span> Iced
-          </button>
+          <button class="option-btn" onclick="selectTemp(this, 'Hot')">Hot</button>
+          <button class="option-btn" onclick="selectTemp(this, 'Iced')">Iced</button>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-label">What drink?</div>
+        <div class="section-label">Drink</div>
         <div class="drinks-grid">
-          <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">
-            <span class="emoji">&#x2615;</span> Coffee
-          </button>
-          <button class="drink-btn" onclick="selectDrink(this, 'Latte')">
-            <span class="emoji">&#x1F95B;</span> Latte
-          </button>
-          <button class="drink-btn" onclick="selectDrink(this, 'Cappuccino')">
-            <span class="emoji">&#x1F4A8;</span> Cappuccino
-          </button>
-          <button class="drink-btn" onclick="selectDrink(this, 'Espresso')">
-            <span class="emoji">&#x26A1;</span> Espresso
-          </button>
-          <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">
-            <span class="emoji">&#x1F36B;</span> Mocha
-          </button>
-          <button class="drink-btn" onclick="selectDrink(this, 'Tea')">
-            <span class="emoji">&#x1F375;</span> Tea
-          </button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Coffee')">Coffee</button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Latte')">Latte</button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Cappuccino')">Cappuccino</button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Espresso')">Espresso</button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Mocha')">Mocha</button>
+          <button class="drink-btn" onclick="selectDrink(this, 'Tea')">Tea</button>
         </div>
       </div>
 
@@ -454,33 +266,29 @@
       </div>
 
       <div class="section">
-        <div class="section-label">Any notes? (optional)</div>
-        <textarea id="notes" rows="2" placeholder="e.g. extra sugar, oat milk..."></textarea>
+        <div class="section-label">Notes (optional)</div>
+        <textarea id="notes" rows="2" placeholder="e.g. extra sugar, oat milk, extra hot..."></textarea>
       </div>
 
       <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
-        Place My Order &#x2615;
+        Place Order &rarr;
       </button>
     </div>
 
-    <!-- CONFIRMATION SCREEN -->
     <div id="confirmScreen" class="confirm-screen">
-      <div class="big-emoji">&#x1F389;</div>
-      <h2>Order Placed!</h2>
+      <div class="confirm-icon">&#x2615;</div>
+      <h2>Order Received</h2>
+      <p class="sub">Olivia's on it â your drink is coming right up.</p>
       <div class="order-summary" id="orderSummary"></div>
-      <p class="sub">Olivia will get it ready for you!</p>
-      <button class="new-order-btn" onclick="resetOrder()">Order Another</button>
+      <button class="new-order-btn" onclick="resetOrder()">Order Again</button>
     </div>
 
-    <!-- Olivia's secret link -->
-    <div class="view-link">
-      <a href="/olivia.html" style="color:#c4a882;font-size:0.8rem;font-family:'Nunito',sans-serif;text-decoration:underline;">&#x1F451; Olivia's Kitchen</a>
+    <div class="footer-link">
+      <a href="/olivia.html">&#x2727; Kitchen View</a>
     </div>
-
   </div>
 
   <script>
-    // EmailJS
     emailjs.init('Y3gHjYF0LoqmAW2oC');
     function sendOrderEmail(order) {
       emailjs.send('service_zqu4qmb', 'template_06yxou9', {
@@ -491,90 +299,56 @@
       }).catch(e => console.log('Email error:', e));
     }
 
-    // Firebase setup
-    const firebaseConfig = {
-      databaseURL: "https://olivia-coffee-default-rtdb.firebaseio.com"
-    };
+    const firebaseConfig = { databaseURL: "https://olivia-coffee-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const ordersRef = db.ref('orders');
 
-    let selectedTemp = '';
-    let selectedDrink = '';
-    let selectedSize = '';
+    let selectedTemp = '', selectedDrink = '', selectedSize = '';
 
     function selectTemp(btn, value) {
       document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedTemp = value;
-      checkReady();
+      btn.classList.add('selected'); selectedTemp = value; checkReady();
     }
-
     function selectDrink(btn, value) {
       document.querySelectorAll('.drink-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedDrink = value;
-      checkReady();
+      btn.classList.add('selected'); selectedDrink = value; checkReady();
     }
-
     function selectSize(btn, value) {
       document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedSize = value;
-      checkReady();
+      btn.classList.add('selected'); selectedSize = value; checkReady();
     }
-
     function checkReady() {
-      const btn = document.getElementById('orderBtn');
-      btn.disabled = !(selectedTemp && selectedDrink && selectedSize);
+      document.getElementById('orderBtn').disabled = !(selectedTemp && selectedDrink && selectedSize);
     }
 
     function placeOrder() {
       const notes = document.getElementById('notes').value.trim();
-      const order = {
-        temp: selectedTemp,
-        drink: selectedDrink,
-        size: selectedSize,
-        notes: notes,
-        price: 3,
-        time: new Date().toLocaleString()
-      };
-
-      // Save to Firebase
+      const order = { temp: selectedTemp, drink: selectedDrink, size: selectedSize, notes: notes, price: 3, time: new Date().toLocaleString() };
       ordersRef.push(order);
-
-      // Send email notification
       sendOrderEmail(order);
-
-      // Show confirmation
       const summary = document.getElementById('orderSummary');
       summary.innerHTML = `
-        <p>Drink: <span>${order.temp} ${order.size} ${order.drink}</span></p>
-        ${order.notes ? `<p>Notes: <span>${order.notes}</span></p>` : ''}
-        <p>Price: <span>$${order.price}.00</span></p>
-        <p>Time: <span>${order.time}</span></p>
+        <div class="row"><span class="label">Drink</span><span class="value">${order.temp} ${order.size} ${order.drink}</span></div>
+        ${order.notes ? `<div class="row"><span class="label">Notes</span><span class="value">${order.notes}</span></div>` : ''}
+        <div class="row"><span class="label">Price</span><span class="value">$${order.price}.00</span></div>
+        <div class="row"><span class="label">Time</span><span class="value">${order.time}</span></div>
       `;
-
       document.getElementById('orderForm').style.display = 'none';
       document.getElementById('confirmScreen').style.display = 'block';
     }
 
     function resetOrder() {
-      selectedTemp = '';
-      selectedDrink = '';
-      selectedSize = '';
+      selectedTemp = ''; selectedDrink = ''; selectedSize = '';
       document.querySelectorAll('.option-btn, .drink-btn, .size-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('notes').value = '';
       document.getElementById('orderBtn').disabled = true;
       document.getElementById('orderForm').style.display = 'block';
       document.getElementById('confirmScreen').style.display = 'none';
     }
-
   </script>
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
   </script>
 </body>
 </html>
