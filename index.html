@@ -481,9 +481,9 @@
 
   <script>
     // EmailJS
-    emailjs.init('YOUR_PUBLIC_KEY');
+    emailjs.init('Y3gHjYF0LoqmAW2oC');
     function sendOrderEmail(order) {
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      emailjs.send('service_zqu4qmb', 'template_06yxou9', {
         drink: order.temp + ' ' + order.size + ' ' + order.drink,
         notes: order.notes || 'No notes',
         price: '$' + order.price + '.00',
